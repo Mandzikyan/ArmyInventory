@@ -3,15 +3,17 @@ using System;
 using Data.Dbcontext;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
 namespace Data.Migrations
 {
     [DbContext(typeof(InventoryContext))]
-    partial class InventoryContextModelSnapshot : ModelSnapshot
+    [Migration("20221021131407_changedescpkeyy")]
+    partial class changedescpkeyy
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -80,10 +82,10 @@ namespace Data.Migrations
                     b.HasKey("Categoryname")
                         .HasName("description_fkey");
 
-                    b.HasIndex("Barcode")
-                        .IsUnique();
-
                     b.HasIndex(new[] { "Categoryname" }, "IX_description_categoryname");
+
+                    b.HasIndex(new[] { "Barcode" }, "description_barcode_key")
+                        .IsUnique();
 
                     b.ToTable("description");
                 });

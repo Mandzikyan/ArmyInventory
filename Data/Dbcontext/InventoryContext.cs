@@ -56,7 +56,7 @@ namespace Data.Dbcontext
             modelBuilder.Entity<Description>(entity =>
             {
                 entity.HasKey(e => e.Categoryname)
-                    .HasName("description_pkey");
+                    .HasName("description_fkey");
 
                 entity.ToTable("description");
 
