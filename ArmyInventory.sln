@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.3.32804.467
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ArmyInventory.api", "ArmyInventory\ArmyInventory.api.csproj", "{2C5F8AB9-61A8-4F73-9BA1-5693FBBF671E}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Data", "Data\Data.csproj", "{AD34F16B-8A20-4C8A-87E1-0DE730D2E10A}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{2C5F8AB9-61A8-4F73-9BA1-5693FBBF671E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2C5F8AB9-61A8-4F73-9BA1-5693FBBF671E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2C5F8AB9-61A8-4F73-9BA1-5693FBBF671E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2C5F8AB9-61A8-4F73-9BA1-5693FBBF671E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{AD34F16B-8A20-4C8A-87E1-0DE730D2E10A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AD34F16B-8A20-4C8A-87E1-0DE730D2E10A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AD34F16B-8A20-4C8A-87E1-0DE730D2E10A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AD34F16B-8A20-4C8A-87E1-0DE730D2E10A}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {DD6F08F4-7314-4C8C-BEDB-31EE369A9E32}
+	EndGlobalSection
+EndGlobal
