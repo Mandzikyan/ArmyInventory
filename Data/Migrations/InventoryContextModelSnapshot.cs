@@ -80,10 +80,10 @@ namespace Data.Migrations
                     b.HasKey("Categoryname")
                         .HasName("description_fkey");
 
-                    b.HasIndex("Barcode")
-                        .IsUnique();
-
                     b.HasIndex(new[] { "Categoryname" }, "IX_description_categoryname");
+
+                    b.HasIndex(new[] { "Barcode" }, "description_barcode_key")
+                        .IsUnique();
 
                     b.ToTable("description");
                 });

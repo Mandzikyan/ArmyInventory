@@ -35,7 +35,7 @@ namespace Data.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("Description_fkey", x => x.categoryname);
+                    
                     table.ForeignKey(
                         name: "description_categoryname_fkey",
                         column: x => x.categoryname,

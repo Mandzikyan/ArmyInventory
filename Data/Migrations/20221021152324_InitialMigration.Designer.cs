@@ -10,8 +10,8 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace Data.Migrations
 {
     [DbContext(typeof(InventoryContext))]
-    [Migration("20221021001703_ChangeFkeytoPkey")]
-    partial class ChangeFkeytoPkey
+    [Migration("20221021152324_InitialMigration")]
+    partial class InitialMigration
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -80,7 +80,7 @@ namespace Data.Migrations
                         .HasColumnName("weight");
 
                     b.HasKey("Categoryname")
-                        .HasName("description_pkey");
+                        .HasName("description_fkey");
 
                     b.HasIndex(new[] { "Categoryname" }, "IX_description_categoryname");
 

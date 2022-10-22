@@ -1,4 +1,5 @@
 ﻿using ArmyInventory.Services;
+using FluentResults;
 using Microsoft.AspNetCore.Mvc;
 
 namespace ArmyInventory.api.Controllers
@@ -21,19 +22,35 @@ namespace ArmyInventory.api.Controllers
 
         public IActionResult GetCategory()
         {
-            return Ok(_inventoryRepository.GetCategory());
+            var method = _inventoryRepository.GetCategory();
+            if (method == null)
+            {
+                return BadRequest();
+            }
+            return Ok(method);
         }
 
         [HttpGet("CategoryItems")]
 
         public IActionResult CategoryItems(string CategoryName)
         {
-            return Ok(_inventoryRepository.GetItemsOfCategory(CategoryName));
+            var method = _inventoryRepository.GetItemsOfCategory(CategoryName);
+            if (method == null)
+            {
+                return BadRequest();
+            }
+            return Ok(method);
         }
         [HttpPost("AddCategory")]
         public IActionResult AddCategoryAsync(string Categoryname)
         {
-            return Ok(_inventoryRepository.AddCategoryAsync(Categoryname));
+
+            var method = _inventoryRepository.AddCategoryAsync(Categoryname);
+            if (method == null)
+            {
+                return BadRequest();
+            }
+            return Ok(method);
         }
 
         [HttpPost("AddItem")]
@@ -47,7 +64,8 @@ namespace ArmyInventory.api.Controllers
             int Quantity,
             string CategoryName)
         {
-            return Ok(_inventoryRepository.AddItemAsync(
+
+            var method = _inventoryRepository.AddItemAsync(
              Barcode,
              Distance,
              Weight,
@@ -55,14 +73,26 @@ namespace ArmyInventory.api.Controllers
              Price,
              Name,
              Quantity,
-             CategoryName));
+             CategoryName);
+
+            if (method == null)
+            {
+                return BadRequest();
+            }
+            return Ok(method);
         }
 
         [HttpDelete("RemoveItem")]
 
         public IActionResult RemoveItem(string Name, string CategoryName)
         {
-            return Ok(_inventoryRepository.RemoveItemAsync(Name, CategoryName));
+            var method = _inventoryRepository.RemoveItemAsync(Name, CategoryName);
+
+            if (method == null)
+            {
+                return BadRequest();
+            }
+            return Ok(method);
         }
 
     }

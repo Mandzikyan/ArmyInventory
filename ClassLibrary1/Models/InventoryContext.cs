@@ -1,12 +1,10 @@
-﻿
-using System;
-using Data.Models;
+﻿using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata;
 
 #nullable disable
 
-namespace Data.Dbcontext
+namespace ClassLibrary1.Models
 {
     public partial class InventoryContext : DbContext
     {
@@ -49,7 +47,9 @@ namespace Data.Dbcontext
                     .HasColumnType("character varying")
                     .HasColumnName("categoryname");
 
-                entity.Property(e => e.Id).ValueGeneratedOnAdd().HasColumnName("id");
+                entity.Property(e => e.Id)
+                    .ValueGeneratedOnAdd()
+                    .HasColumnName("id");
             });
 
             modelBuilder.Entity<Description>(entity =>
@@ -59,10 +59,14 @@ namespace Data.Dbcontext
 
                 entity.ToTable("description");
 
-                entity.HasIndex(e => e.Categoryname, "IX_descri                                                 ption_categoryname");
+                entity.HasIndex(e => e.Categoryname, "IX_description_categoryname");
 
                 entity.HasIndex(e => e.Barcode, "description_barcode_key")
                     .IsUnique();
+
+                entity.Property(e => e.Categoryname)
+                    .HasColumnType("character varying")
+                    .HasColumnName("categoryname");
 
                 entity.Property(e => e.Barcode)
                     .IsRequired()
@@ -70,11 +74,6 @@ namespace Data.Dbcontext
                     .HasColumnName("barcode");
 
                 entity.Property(e => e.Capacity).HasColumnName("capacity");
-
-                entity.Property(e => e.Categoryname)
-                    .IsRequired()
-                    .HasColumnType("character varying")
-                    .HasColumnName("categoryname");
 
                 entity.Property(e => e.Distance).HasColumnName("distance");
 
@@ -85,14 +84,13 @@ namespace Data.Dbcontext
 
                 entity.Property(e => e.Price).HasColumnName("price");
 
-                entity.Property(e => e.Quantity)
-                    .HasColumnName("quantity");
+                entity.Property(e => e.Quantity).HasColumnName("quantity");
 
                 entity.Property(e => e.Weight).HasColumnName("weight");
 
                 entity.HasOne(d => d.CategorynameNavigation)
-                    .WithMany()
-                    .HasForeignKey(d => d.Categoryname)
+                    .WithOne(p => p.Description)
+                    .HasForeignKey<Description>(d => d.Categoryname)
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("description_categoryname_fkey");
             });

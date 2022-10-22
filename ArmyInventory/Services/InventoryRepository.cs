@@ -27,6 +27,13 @@ namespace ArmyInventory.Services
         {
             return _context.Categories.ToList<Category>();
         }
+        public IEnumerable<Description> GetItemsOfCategory(string CategoryName)
+        {
+            return _context.Descriptions
+            .Where(x => x.Categoryname == CategoryName)
+            .ToList<Description>();
+        }
+
         public async Task<Result> AddCategoryAsync(string NewCategoryName)
         {
             if (NewCategoryName == null)
@@ -34,7 +41,7 @@ namespace ArmyInventory.Services
                 return Result.Fail("");
             }
 
-            var item = await _context.Categories.FirstOrDefaultAsync(x => x.Categoryname == NewCategoryName);
+            var item = await _context.Categories.FirstOrDefaultAsync(x => x.Categoryname == NewCategoryName.ToLower());
 
             try
             {
@@ -58,6 +65,7 @@ namespace ArmyInventory.Services
 
         }
 
+
         public async Task<Result> AddItemAsync(
             string Barcode,
             int Distance,
@@ -73,7 +81,7 @@ namespace ArmyInventory.Services
                 return Result.Fail("");
             }
 
-            var item = await _context.Descriptions.FirstOrDefaultAsync(x => x.Categoryname == CategoryName && x.Name == Name);
+            var item = await _context.Descriptions.FirstOrDefaultAsync(x => x.Categoryname == CategoryName.ToLower() && x.Name == Name.ToLower());
 
             try
             {
@@ -94,6 +102,7 @@ namespace ArmyInventory.Services
                     await _context.SaveChangesAsync();
                     return Result.Ok();
                 }
+                 
                 item.Quantity += Quantity; 
                 await _context.SaveChangesAsync();
                 return Result.Ok();
@@ -132,28 +141,6 @@ namespace ArmyInventory.Services
             }
         }
 
-        public async Task<Result<Description>> GetItemsOfCategory(string CategoryName)
-        {
-
-            if (CategoryName == null)
-            {
-                return Result.Fail("");
-            }
-
-            var item = await _context.Descriptions.FirstOrDefaultAsync(x => x.Categoryname == CategoryName);
-            try
-            {
-                if (item == null)
-                {
-                    return Result.Ok();
-                }
-                return Result.Ok<Description>(item);
-            }
-            catch (Exception ex)
-            {
-                return Result.Fail(ex.Message);
-            }
-        }
-
+                            
     }
 }
