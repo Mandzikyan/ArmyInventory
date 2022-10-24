@@ -10,28 +10,26 @@ using System.Threading.Tasks;
 namespace ArmyInventory.Services
 
 {
-
     public class InventoryRepository
     {
         private readonly InventoryContext _context;
 
-
         public InventoryRepository()
         {
-
             _context = new InventoryContext();
         }
 
-
-        public IEnumerable<Category> GetCategory()
+        public IEnumerable<Category> GetCategories()
         {
-            return _context.Categories.ToList<Category>();
+            return _context.Categories;
         }
+        
         public IEnumerable<Description> GetItemsOfCategory(string CategoryName)
         {
-            return _context.Descriptions
-            .Where(x => x.Categoryname == CategoryName)
-            .ToList<Description>();
+            var r = _context.Descriptions.Where(x => x.Categoryname == CategoryName);
+
+
+            return r;
         }
 
         public async Task<Result> AddCategoryAsync(string NewCategoryName)
@@ -67,43 +65,26 @@ namespace ArmyInventory.Services
 
 
         public async Task<Result> AddItemAsync(
-            string Barcode,
-            int Distance,
-            decimal Weight,
-            int Capacity,
-            decimal Price,
-            string Name,
-            int Quantity,
-            string CategoryName)
+            Description desc)
         {
-            if (CategoryName == null || Barcode == null || Name == null || Quantity == 0 || Weight == 0)
+            if (desc.Categoryname == null || desc.Barcode == null || desc.Name == null || desc.Quantity == 0 || desc.Weight == 0)
             {
                 return Result.Fail("");
             }
 
-            var item = await _context.Descriptions.FirstOrDefaultAsync(x => x.Categoryname == CategoryName.ToLower() && x.Name == Name.ToLower());
+            var item = await _context.Descriptions.FirstOrDefaultAsync(x => x.Categoryname == desc.Categoryname.ToLower() && x.Name == desc.Name.ToLower());
 
             try
             {
                 if (item == null)
                 {
-                    var t = new Description()
-                    {
-                        Barcode = Barcode.ToLower(),
-                        Distance = Distance,
-                        Weight = Weight,
-                        Capacity = Capacity,
-                        Name = Name.ToLower(),
-                        Quantity = Quantity,
-                        Price = Price,
-                        Categoryname = CategoryName.ToLower()
-                    };
-                    await _context.Descriptions.AddAsync(t);
+                    
+                    await _context.Descriptions.AddAsync(desc);
                     await _context.SaveChangesAsync();
                     return Result.Ok();
                 }
                  
-                item.Quantity += Quantity; 
+                item.Quantity += desc.Quantity; 
                 await _context.SaveChangesAsync();
                 return Result.Ok();
             }
@@ -139,8 +120,6 @@ namespace ArmyInventory.Services
             {
                 return Result.Fail(ex.Message);
             }
-        }
-
-                            
+        }                
     }
 }

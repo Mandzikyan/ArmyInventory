@@ -1,6 +1,9 @@
 ﻿using ArmyInventory.Services;
+using Data.Models;
 using FluentResults;
 using Microsoft.AspNetCore.Mvc;
+using System.Runtime.InteropServices;
+using System.Threading.Tasks;
 
 namespace ArmyInventory.api.Controllers
 {
@@ -13,86 +16,74 @@ namespace ArmyInventory.api.Controllers
 
         public InventoryControler()
         {
-
             _inventoryRepository = new InventoryRepository();
-
         }
 
         [HttpGet()]
-
-        public IActionResult GetCategory()
+        [Route("GetCategories")]
+        public IActionResult GetCategories()
         {
-            var method = _inventoryRepository.GetCategory();
+            var method = _inventoryRepository.GetCategories();
             if (method == null)
             {
                 return BadRequest();
             }
+            return Ok();
+        }
+
+        [HttpGet]
+        [Route("CategoryItems")]
+        public IActionResult CategoryItems(string CategoryItems)
+        {
+            var method = _inventoryRepository.GetItemsOfCategory(CategoryItems);
+            if (method == null)
+            {
+                return BadRequest();
+            }
+
             return Ok(method);
         }
 
-        [HttpGet("CategoryItems")]
-
-        public IActionResult CategoryItems(string CategoryName)
+        [HttpPost]
+        [Route("AddCategory")]
+        public async Task<IActionResult> AddCategory(string Categoryname)
         {
-            var method = _inventoryRepository.GetItemsOfCategory(CategoryName);
-            if (method == null)
+            var method = await _inventoryRepository.AddCategoryAsync(Categoryname);
+            if (method.IsFailed)
             {
                 return BadRequest();
             }
-            return Ok(method);
-        }
-        [HttpPost("AddCategory")]
-        public IActionResult AddCategoryAsync(string Categoryname)
-        {
 
-            var method = _inventoryRepository.AddCategoryAsync(Categoryname);
-            if (method == null)
-            {
-                return BadRequest();
-            }
-            return Ok(method);
+            return Ok();
         }
 
-        [HttpPost("AddItem")]
-        public IActionResult AddItemAsync(
-            string Barcode,
-            int Distance,
-            decimal Weight,
-            int Capacity,
-            decimal Price,
-            string Name,
-            int Quantity,
-            string CategoryName)
+        [HttpPost]
+        [Route("AddItem")]
+
+        public async Task<IActionResult> AddItem([FromBody] Description Desc)
         {
 
-            var method = _inventoryRepository.AddItemAsync(
-             Barcode,
-             Distance,
-             Weight,
-             Capacity,
-             Price,
-             Name,
-             Quantity,
-             CategoryName);
+            var method = await _inventoryRepository.AddItemAsync(
+             Desc);
 
-            if (method == null)
+            if (method.IsFailed)
             {
                 return BadRequest();
             }
-            return Ok(method);
+            return Ok();
         }
 
-        [HttpDelete("RemoveItem")]
-
-        public IActionResult RemoveItem(string Name, string CategoryName)
+        [HttpDelete]
+        [Route("RemoveItem")]
+        public async Task<IActionResult> RemoveItem(string Name, string CategoryName)
         {
-            var method = _inventoryRepository.RemoveItemAsync(Name, CategoryName);
+            var method = await _inventoryRepository.RemoveItemAsync(Name, CategoryName);
 
-            if (method == null)
+            if (method.IsFailed)
             {
                 return BadRequest();
             }
-            return Ok(method);
+            return Ok();
         }
 
     }

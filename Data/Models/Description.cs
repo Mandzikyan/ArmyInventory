@@ -1,6 +1,5 @@
-﻿ using System;
+﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations.Schema;
 
 #nullable disable
 
@@ -8,6 +7,7 @@ namespace Data.Models
 {
     public partial class Description
     {
+        public string Categoryname { get; set; }
         public string Barcode { get; set; }
         public decimal? Distance { get; set; }
         public decimal Weight { get; set; }
@@ -15,8 +15,7 @@ namespace Data.Models
         public decimal Price { get; set; }
         public string Name { get; set; }
         public int Quantity { get; set; }
-        public string Categoryname { get; set; }
-       
+
         public virtual Category CategorynameNavigation { get; set; }
     }
 }

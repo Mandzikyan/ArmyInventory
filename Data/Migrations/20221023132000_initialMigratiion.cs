@@ -3,7 +3,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
 namespace Data.Migrations
 {
-    public partial class InitialMigration : Migration
+    public partial class initialMigratiion : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -35,7 +35,6 @@ namespace Data.Migrations
                 },
                 constraints: table =>
                 {
-                    
                     table.ForeignKey(
                         name: "description_categoryname_fkey",
                         column: x => x.categoryname,

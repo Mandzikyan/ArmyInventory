@@ -1,5 +1,4 @@
-﻿
-using System;
+﻿using System;
 using Data.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata;
@@ -49,17 +48,19 @@ namespace Data.Dbcontext
                     .HasColumnType("character varying")
                     .HasColumnName("categoryname");
 
-                entity.Property(e => e.Id).ValueGeneratedOnAdd().HasColumnName("id");
+                entity.Property(e => e.Id)
+                    .ValueGeneratedOnAdd()
+                    .HasColumnName("id");
             });
 
             modelBuilder.Entity<Description>(entity =>
             {
-                entity.HasKey(e => e.Categoryname)
-                    .HasName("description_fkey");
+                entity.HasKey(e => e.Barcode)
+                    .HasName("Description_pkey");
 
                 entity.ToTable("description");
 
-                entity.HasIndex(e => e.Categoryname, "IX_descri                                                 ption_categoryname");
+                entity.HasIndex(e => e.Categoryname, "IX_description_categoryname");
 
                 entity.HasIndex(e => e.Barcode, "description_barcode_key")
                     .IsUnique();
@@ -85,8 +86,7 @@ namespace Data.Dbcontext
 
                 entity.Property(e => e.Price).HasColumnName("price");
 
-                entity.Property(e => e.Quantity)
-                    .HasColumnName("quantity");
+                entity.Property(e => e.Quantity).HasColumnName("quantity");
 
                 entity.Property(e => e.Weight).HasColumnName("weight");
 

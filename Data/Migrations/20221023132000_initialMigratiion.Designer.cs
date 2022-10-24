@@ -10,8 +10,8 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace Data.Migrations
 {
     [DbContext(typeof(InventoryContext))]
-    [Migration("20221021152324_InitialMigration")]
-    partial class InitialMigration
+    [Migration("20221023132000_initialMigratiion")]
+    partial class initialMigratiion
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -45,10 +45,6 @@ namespace Data.Migrations
 
             modelBuilder.Entity("Data.Models.Description", b =>
                 {
-                    b.Property<string>("Categoryname")
-                        .HasColumnType("character varying")
-                        .HasColumnName("categoryname");
-
                     b.Property<string>("Barcode")
                         .IsRequired()
                         .HasColumnType("character varying")
@@ -57,6 +53,11 @@ namespace Data.Migrations
                     b.Property<int?>("Capacity")
                         .HasColumnType("integer")
                         .HasColumnName("capacity");
+
+                    b.Property<string>("Categoryname")
+                        .IsRequired()
+                        .HasColumnType("character varying")
+                        .HasColumnName("categoryname");
 
                     b.Property<decimal?>("Distance")
                         .HasColumnType("numeric")
@@ -78,9 +79,6 @@ namespace Data.Migrations
                     b.Property<decimal>("Weight")
                         .HasColumnType("numeric")
                         .HasColumnName("weight");
-
-                    b.HasKey("Categoryname")
-                        .HasName("description_fkey");
 
                     b.HasIndex(new[] { "Categoryname" }, "IX_description_categoryname");
 

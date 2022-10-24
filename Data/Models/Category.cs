@@ -9,7 +9,5 @@ namespace Data.Models
     {
         public string Categoryname { get; set; }
         public int Id { get; set; }
-
-        //public virtual Description Description { get; set; }
     }
 }
